@@ -8,6 +8,8 @@ It is a small app that does the following instructions:
 * By clicking on "Edit information", a modal open up.
 * In this modal, an input to modify his first name, last name and email address, as well as a "save" button. In support of this button, the information will be modified in the database and on the main page without reloading the page.
 
+## Screenshots
+![alt text](https://github.com/aymaneMx/EXO/blob/master/assets/example-gif.gif)
 
 ## Quick start
 1. Clone repo like this:
