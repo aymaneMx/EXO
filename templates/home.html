@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item active">my profile</li>
+{% endblock %}
+
+{% block content %}
+
+    <div id="info-profile">
+    {% include 'user_profile.html' %}
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal fade" id="EditModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                {% include 'partial_Edit.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascript %}
+    <script language="JavaScript" type="text/javascript">
+        $(document).ready(function () {
+            $("#EditModal").on("submit", ".js-edit-profile-form", function () {
+                const form = $(this);
+                $.ajax({
+                    url: form.attr("action"),
+                    data: form.serialize(),
+                    type: form.attr("method"),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.form_is_valid) {
+                            $("#info-profile").html(data.html_user_profile);
+                            $("#EditModal").modal("hide");
+                        }
+                        else {
+                            $("#EditModal .modal-content").html(data.html_form);
+                        }
+                    }
+                });
+                return false;
+            });
+
+            $(".js-edit-profile").click(function () {
+                const btn = $(this);
+                $.ajax({
+                    url: btn.attr("data-url"),
+                    type: 'get',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        $("#EditModal").modal("show");
+                    },
+                    success: function (data) {
+                        $("#EditModal .modal-content").html(data.html_form);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+{% endblock %}
